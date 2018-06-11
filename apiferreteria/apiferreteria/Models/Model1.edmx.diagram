@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="14ad6746697e4ebda1734ed8030e53a9" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.BILL" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.BILL_DETAIL" Width="2" PointX="10.375" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CLIENT" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DEALER" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.DETAIL_GUIA_DESPACHO" Width="1.5" PointX="5.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.FERME" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.GUIA_DESPACHO" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PRODUCT" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TICKET" Width="1.5" PointX="10.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TICKET_DETAIL" Width="1.5" PointX="13" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.user" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_TYPE" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="Model.BILL_DETAIL_BILL_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.BILL_DETAIL_PRODUCT_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.CLIENT_USER_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.DEALER_USER_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.DETALLE_GUIA_DESPACHO_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.GUIA_DESPACHO_FERME_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.TICKET_DETAIL_PRODUCT_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.TICKET_DETAIL_TICKET_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.USER_USER_TYPE_FK" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
