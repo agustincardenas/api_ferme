@@ -1,0 +1,217 @@
+-- Generado por Oracle SQL Developer Data Modeler 17.2.0.188.1059
+--   en:        2018-06-05 23:59:58 CLT
+--   sitio:      Oracle Database 11g
+--   tipo:      Oracle Database 11g
+
+
+
+CREATE TABLE bill (
+    bill_id       NUMBER NOT NULL,
+    date_output   DATE NOT NULL,
+    client_id     NUMBER,
+    total_bruto   NUMBER NOT NULL,
+    iva           NUMBER,
+    total         NUMBER NOT NULL
+);
+
+ALTER TABLE bill ADD CONSTRAINT bill_pk PRIMARY KEY ( bill_id );
+
+CREATE TABLE bill_detail (
+    detail_bill_id     NUMBER NOT NULL,
+    product_id         NUMBER NOT NULL,
+    bill_id            NUMBER NOT NULL,
+    product_quantity   NUMBER NOT NULL,
+    product_price      NUMBER NOT NULL,
+    total              NUMBER NOT NULL
+);
+
+ALTER TABLE bill_detail ADD CONSTRAINT bill_detail_pk PRIMARY KEY ( detail_bill_id );
+
+CREATE TABLE client (
+    client_id         NUMBER NOT NULL,
+    user_id           NUMBER NOT NULL,
+    client_name       VARCHAR2(100) NOT NULL,
+    client_phone      NUMBER NOT NULL,
+    client_address    VARCHAR2(100) NOT NULL,
+    client_birthday   DATE NOT NULL
+);
+
+CREATE UNIQUE INDEX client__idx ON
+    client ( user_id ASC );
+
+ALTER TABLE client ADD CONSTRAINT client_pk PRIMARY KEY ( client_id );
+
+CREATE TABLE dealer (
+    dealer_id   NUMBER NOT NULL,
+    user_id     NUMBER NOT NULL,
+    email       NVARCHAR2(100) NOT NULL,
+    phone       NUMBER,
+    address     VARCHAR2(200) NOT NULL,
+    rubro       VARCHAR2(100) NOT NULL
+);
+
+CREATE UNIQUE INDEX dealer__idx ON
+    dealer ( user_id ASC );
+
+ALTER TABLE dealer ADD CONSTRAINT dealer_pk PRIMARY KEY ( dealer_id );
+
+CREATE TABLE detail_guia_despacho (
+    detalle_guia_despacho_id   NUMBER NOT NULL,
+    guia_despacho_id           NUMBER NOT NULL,
+    bill_detail_id             NUMBER,
+    ticket_detail_id           NUMBER
+);
+
+ALTER TABLE detail_guia_despacho ADD CONSTRAINT detalle_guia_despacho_pk PRIMARY KEY ( detalle_guia_despacho_id );
+
+CREATE TABLE ferme (
+    ferreteria_id        NUMBER NOT NULL,
+    ferreteria_rut       VARCHAR2(20) NOT NULL,
+    ferreteria_address   VARCHAR2(200) NOT NULL,
+    ferreteria_phone     NUMBER NOT NULL,
+    ferreteria_email     VARCHAR2(100) NOT NULL,
+    razon_social         VARCHAR2(100) NOT NULL,
+    giro                 VARCHAR2(100) NOT NULL
+);
+
+ALTER TABLE ferme ADD CONSTRAINT ferme_pk PRIMARY KEY ( ferreteria_id );
+
+CREATE TABLE guia_despacho (
+    guia_despacho_id   NUMBER NOT NULL,
+    ferreteria_id      NUMBER NOT NULL,
+    despacho_address   VARCHAR2(150) NOT NULL
+);
+
+ALTER TABLE guia_despacho ADD CONSTRAINT guia_despacho_pk PRIMARY KEY ( guia_despacho_id );
+
+CREATE TABLE product (
+    product_id       NUMBER NOT NULL,
+    description      VARCHAR2(100) NOT NULL,
+    price            NUMBER NOT NULL,
+    stock            NUMBER NOT NULL,
+    critical_stock   NUMBER NOT NULL
+);
+
+ALTER TABLE product ADD CONSTRAINT product_pk PRIMARY KEY ( product_id );
+
+CREATE TABLE ticket (
+    ticket_id     NUMBER NOT NULL,
+    date_output   DATE NOT NULL,
+    client_id     NUMBER NOT NULL,
+    total         NUMBER NOT NULL
+);
+
+ALTER TABLE ticket ADD CONSTRAINT ticket_pk PRIMARY KEY ( ticket_id );
+
+CREATE TABLE ticket_detail (
+    ticket_detail_id   NUMBER NOT NULL,
+    product_id         NUMBER NOT NULL,
+    ticket_id          NUMBER NOT NULL,
+    product_quantity   NUMBER NOT NULL,
+    product_price      NUMBER NOT NULL,
+    total              NUMBER NOT NULL
+);
+
+ALTER TABLE ticket_detail ADD CONSTRAINT ticket_detail_pk PRIMARY KEY ( ticket_detail_id );
+
+CREATE TABLE "user" (
+    user_id         NUMBER NOT NULL,
+    user_type_id    NUMBER NOT NULL,
+    user_name       VARCHAR2(50) NOT NULL,
+    password        VARCHAR2(50) NOT NULL,
+    user_fullname   VARCHAR2(100) NOT NULL,
+    user_rut        NUMBER NOT NULL,
+    user_dv         NUMBER NOT NULL
+);
+
+CREATE UNIQUE INDEX user__idx ON
+    "user" ( user_type_id ASC );
+
+ALTER TABLE "user" ADD CONSTRAINT user_pk PRIMARY KEY ( user_id );
+
+CREATE TABLE user_type (
+    user_type_id    NUMBER NOT NULL,
+    user_type_ame   VARCHAR2(50) NOT NULL
+);
+
+ALTER TABLE user_type ADD CONSTRAINT user_type_pk PRIMARY KEY ( user_type_id );
+
+ALTER TABLE bill_detail
+    ADD CONSTRAINT bill_detail_bill_fk FOREIGN KEY ( bill_id )
+        REFERENCES bill ( bill_id );
+
+ALTER TABLE bill_detail
+    ADD CONSTRAINT bill_detail_product_fk FOREIGN KEY ( product_id )
+        REFERENCES product ( product_id );
+
+ALTER TABLE client
+    ADD CONSTRAINT client_user_fk FOREIGN KEY ( user_id )
+        REFERENCES "user" ( user_id );
+
+ALTER TABLE dealer
+    ADD CONSTRAINT dealer_user_fk FOREIGN KEY ( user_id )
+        REFERENCES "user" ( user_id );
+
+ALTER TABLE detail_guia_despacho
+    ADD CONSTRAINT detalle_guia_despacho_fk FOREIGN KEY ( guia_despacho_id )
+        REFERENCES guia_despacho ( guia_despacho_id );
+
+ALTER TABLE guia_despacho
+    ADD CONSTRAINT guia_despacho_ferme_fk FOREIGN KEY ( ferreteria_id )
+        REFERENCES ferme ( ferreteria_id );
+
+ALTER TABLE ticket_detail
+    ADD CONSTRAINT ticket_detail_product_fk FOREIGN KEY ( product_id )
+        REFERENCES product ( product_id );
+
+ALTER TABLE ticket_detail
+    ADD CONSTRAINT ticket_detail_ticket_fk FOREIGN KEY ( ticket_id )
+        REFERENCES ticket ( ticket_id );
+
+ALTER TABLE "user"
+    ADD CONSTRAINT user_user_type_fk FOREIGN KEY ( user_type_id )
+        REFERENCES user_type ( user_type_id );
+
+
+
+-- Informe de Resumen de Oracle SQL Developer Data Modeler: 
+-- 
+-- CREATE TABLE                            12
+-- CREATE INDEX                             3
+-- ALTER TABLE                             21
+-- CREATE VIEW                              0
+-- ALTER VIEW                               0
+-- CREATE PACKAGE                           0
+-- CREATE PACKAGE BODY                      0
+-- CREATE PROCEDURE                         0
+-- CREATE FUNCTION                          0
+-- CREATE TRIGGER                           0
+-- ALTER TRIGGER                            0
+-- CREATE COLLECTION TYPE                   0
+-- CREATE STRUCTURED TYPE                   0
+-- CREATE STRUCTURED TYPE BODY              0
+-- CREATE CLUSTER                           0
+-- CREATE CONTEXT                           0
+-- CREATE DATABASE                          0
+-- CREATE DIMENSION                         0
+-- CREATE DIRECTORY                         0
+-- CREATE DISK GROUP                        0
+-- CREATE ROLE                              0
+-- CREATE ROLLBACK SEGMENT                  0
+-- CREATE SEQUENCE                          0
+-- CREATE MATERIALIZED VIEW                 0
+-- CREATE SYNONYM                           0
+-- CREATE TABLESPACE                        0
+-- CREATE USER                              0
+-- 
+-- DROP TABLESPACE                          0
+-- DROP DATABASE                            0
+-- 
+-- REDACTION POLICY                         0
+-- 
+-- ORDS DROP SCHEMA                         0
+-- ORDS ENABLE SCHEMA                       0
+-- ORDS ENABLE OBJECT                       0
+-- 
+-- ERRORS                                   0
+-- WARNINGS                                 0
